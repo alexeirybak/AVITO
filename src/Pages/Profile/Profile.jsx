@@ -3,8 +3,10 @@ import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
 import * as S from './Profile.styled';
+import { getUser } from '../../Api/userApi';
 
 export const Profile = ({ products }) => {
+  getUser()
   return (
     <S.Wrapper>
       <S.Container>
@@ -31,28 +33,29 @@ export const Profile = ({ products }) => {
 
                     <S.SettingsRight>
                       <S.SettingsForm>
-                        <S.SettingsDiv>
-                          <S.SettingsLabel htmlFor='settings-fname'>
-                            Имя
-                          </S.SettingsLabel>
-                          <S.SettingsFName
-                            name='fname'
-                            type='text'
-                            placeholder=''
-                          />
-                        </S.SettingsDiv>
+                        <S.SettingsNameBox>
+                          <S.SettingsDiv>
+                            <S.SettingsLabel htmlFor='settings-fname'>
+                              Имя
+                            </S.SettingsLabel>
+                            <S.SettingsFName
+                              name='fname'
+                              type='text'
+                              placeholder=''
+                            />
+                          </S.SettingsDiv>
 
-                        <S.SettingsDiv>
-                          <S.SettingsLabel htmlFor='settings-lname'>
-                            Фамилия
-                          </S.SettingsLabel>
-                          <S.SettingsLName
-                            name='lname'
-                            type='text'
-                            placeholder=''
-                          />
-                        </S.SettingsDiv>
-
+                          <S.SettingsDiv>
+                            <S.SettingsLabel htmlFor='settings-lname'>
+                              Фамилия
+                            </S.SettingsLabel>
+                            <S.SettingsLName
+                              name='lname'
+                              type='text'
+                              placeholder=''
+                            />
+                          </S.SettingsDiv>
+                        </S.SettingsNameBox>
                         <S.SettingsDiv>
                           <S.SettingsLabel htmlFor='settings-city'>
                             Город
