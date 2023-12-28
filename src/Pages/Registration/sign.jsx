@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { SignIn } from '../../Components/Registration/signIn';
 import { SignUp } from '../../Components/Registration/signUp';
+import { useGetNewTokenQuery } from '../../Store/RTKQuery/getToken';
+
 
 export const Sign = () => {
   const [choiceReg, setChoiceReg] = useState(true);
@@ -11,6 +13,6 @@ export const Sign = () => {
   return choiceReg ? (
     <SignIn setChoiceReg={setChoiceReg} />
   ) : (
-    <SignUp/>
+    <SignUp setChoiceReg={setChoiceReg}/>
   );
 };
