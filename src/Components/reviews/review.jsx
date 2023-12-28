@@ -1,15 +1,21 @@
-
+import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
+import { Footer } from '../Footer/Footer';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
 
-export const Review = () => {
+export const Review = ({ closeModal }) => {
     return (
         <S.Wrapper>
             <S.ContainerBg>
+            <HeaderSecond />
                 <S.ModalBlock>
                     <S.ModalContent>
-                        <S.ModalTitle>Отзывы о товаре</S.ModalTitle>
-                        <S.ModalBtnClose>
+                        <S.ModalTitle>
+                            <S.ModalBtnReturnMobile onClick={closeModal}>
+                                <S.ModalBtnReturnImgMobile src="/img/return.png" />
+                            </S.ModalBtnReturnMobile>
+                            Отзывы о товаре</S.ModalTitle>
+                        <S.ModalBtnClose onClick={closeModal}>
                             <S.ModalBtnCloseLine />
                         </S.ModalBtnClose>
                         <SU.ModalScroll>
@@ -95,6 +101,7 @@ export const Review = () => {
                         </SU.ModalScroll>
                     </S.ModalContent>
                 </S.ModalBlock>
+                <Footer />
             </S.ContainerBg>
         </S.Wrapper>
     )
