@@ -1,21 +1,146 @@
 import { Link } from 'react-router-dom';
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Footer } from '../../Components/Footer/Footer';
 import { Header } from '../../Components/Header/Header';
 import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import * as S from '../Main/main.styled';
 import * as St from './Product.styled';
+import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { Review } from '../../Components/reviews/review';
+import { EditorAdv } from '../../Components/EditorAdv/editor';
+import { useGetAdvIDQuery } from '../../Store/RTKQuery/getAdvId';
+import { getTime, formatDate } from '../../helpers/time';
+import { useGetCommentsQuery } from '../../Store/RTKQuery/getComments';
+import { updateToken } from '../../Api/tokenApi';
+import { getSeller } from '../../Api/sellerApi';
+import { useDeleteAdvMutation } from '../../Store/RTKQuery/getMyAds';
+import { getAccessTokenLocal } from '../../helpers/token';
 
-export const Product = () => {
-
+export const Product = ({}) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [deleteAdv] = useDeleteAdvMutation();
+  const [timeResult, setTimeResult] = useState('00.00.00');
+  const [userId, setUserId] = useState(null);
+  const [dataUsers, setDataUsers] = useState([]);
+  const [showFullPhone, setShowFullPhone] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('/img/noFoto.jpeg');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { data: dataComments = [] } = useGetCommentsQuery(id);
+  const {
+    data = [],
+    isError,
+    error,
+    isSuccess,
+    refetch,
+  } = useGetAdvIDQuery(id);
+  const userLoggedIn = getAccessTokenLocal();
+  // может просматривать незалогиненный
+  const userIsSeller = Boolean(
+    String(data.user_id) === window.localStorage.getItem('id'),
+  );
 
-  return (
+  useEffect(() => {
+    if (isSuccess) {
+      const result = getTime(data.created_on);
+      setTimeResult(result);
+      setUserId(Number(data.user.id - 1));
+      if (data.images && data.images.length > 0) {
+        setSelectedImage(`http://localhost:8090/${data.images[0].url}`);
+      }
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess && show2) {
+      setShow(true);
+    }
+  }, [isSuccess, show2]);
+
+  useEffect(() => {
+    getSeller();
+    if (isError && error.status == 401) {
+      asyncUpgate();
+      getSeller();
+    }
+  }, [isSuccess]);
+
+  const handleImageClick = (imageSrc) => {
+    setSelectedImage(imageSrc);
+  };
+
+  const asyncUpgate = async () => {
+    await updateToken();
+    await refetch();
+    return;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedDataUser = await getSeller();
+        setDataUsers(fetchedDataUser);
+      } catch (error) {
+        console.error('Ушел на базу:', error);
+      } finally {
+        setShow2(true);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [openReviews, setOpenReviews] = useState(false);
+  const openReviewsModal = () => {
+    setOpenReviews(true);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleOpenModal = () => {
+    if (windowWidth <= 600) {
+      setIsModalOpen(true);
+      setIsReviewModalOpen(true);
+    }
+  };
+  const deleteThisAdv = async () => {
+    const access = getAccessTokenLocal();
+    await deleteAdv({ access, id });
+    navigate(-1);
+  };
+
+  const [showAdvEdit, setShowAdvEdit] = useState(false);
+  const openAdvEditor = () => {
+    setShowAdvEdit(true);
+  };
+  const handleCloseAllModals = () => {
+    setOpenReviews(false);
+    setShowAdvEdit(false);
+  };
+
+  return show ? (
     <S.Wrapper>
       <S.Container>
-        <Header />
-        <main>
+        {userLoggedIn && userLoggedIn !== 'undefined' ? (
+          <HeaderSecond />
+        ) : (
+          <Header />
+        )}
+        <S.Main>
           <St.ProductContainer>
             <ReturnToMain />
           </St.ProductContainer>
@@ -23,14 +148,21 @@ export const Product = () => {
             <St.ProductArticleContent>
               <St.ProductArticleLeft>
                 <St.ProductArticleFillImg>
-                  <St.ProductArticleImage src='' alt='' />
+                  <St.ProductArticleImage
+                    src={selectedImage}
+                    alt='Фото товара'
+                  />
                   <St.ProductImageBarDesktop>
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
-                    <St.ProductImageBarDiv src='' alt='' />
+                    {data.images.map((image) => (
+                      <St.ProductImageBarDiv
+                        key={image.id}
+                        src={`http://localhost:8090/${image.url}`}
+                        alt='Фото товара'
+                        onClick={() =>
+                          handleImageClick(`http://localhost:8090/${image.url}`)
+                        }
+                      />
+                    ))}
                   </St.ProductImageBarDesktop>
                   <St.ProductImageBarMobile>
                     <St.ProductImageBarMobileCircle />
@@ -43,31 +175,62 @@ export const Product = () => {
               </St.ProductArticleLeft>
               <St.ProductArticleRight>
                 <St.ProductArticleRightBlock>
-                  <St.ProductTitle>
-                    Ракетка для большого тенниса Triumph Pro STС Б/У
-                  </St.ProductTitle>
+                  <St.ProductTitle>{data.title}</St.ProductTitle>
                   <St.ProductInfo>
-                    <St.ProductDate>Сегодня в 10:45</St.ProductDate>
-                    <St.ProductCity>Санкт-Петербург</St.ProductCity>
-                    <St.ProductReviews to='/review'>
-                      23 отзыва
+                    <St.ProductDate>{timeResult}</St.ProductDate>
+                    <St.ProductCity>
+                      {Boolean(data.user.city)
+                        ? data.user.city
+                        : 'что нам город? Перед нами весь мир...не указан короче'}
+                    </St.ProductCity>
+                    <St.ProductReviews onClick={openReviewsModal}>
+                      {dataComments.length === 0
+                        ? `еще нет отзывов, но вы можете сделать первый`
+                        : `Отзывов: ${dataComments.length}`}
                     </St.ProductReviews>
                   </St.ProductInfo>
-                  <St.ProductPrice>2 200 ₽</St.ProductPrice>
-                  <St.ProductButton>
-                    Показать&nbsp;телефон
-                    <St.ProductButtonSpan>
-                      8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                    </St.ProductButtonSpan>
-                  </St.ProductButton>
+                  <St.ProductPrice>{data.price} руб.</St.ProductPrice>
+                  {userIsSeller ? (
+                    <St.ProductButtonBox>
+                      <St.ProductButton onClick={openAdvEditor}>
+                        Редактировать
+                      </St.ProductButton>
+                      <St.ProductButton onClick={() => deleteThisAdv()}>
+                        Снять с публикации
+                      </St.ProductButton>
+                    </St.ProductButtonBox>
+                  ) : (
+                    <St.ProductButton
+                      onClick={() => setShowFullPhone(!showFullPhone)}
+                      onMouseLeave={() => setShowFullPhone(false)}
+                    >
+                      Показать&nbsp;телефон&nbsp;
+                      <St.ProductButtonSpan>
+                        {dataUsers[userId].phone
+                          ? showFullPhone
+                            ? dataUsers[userId].phone
+                            : dataUsers[userId].phone.substring(0, 6) +
+                              'XXX XX XX'
+                          : 'номер не указан'}
+                      </St.ProductButtonSpan>
+                    </St.ProductButton>
+                  )}
                   <St.ProductAuthor>
-                    <St.ProductAuthorImage src='' alt='' />
+                    <St.ProductAuthorImage
+                      src={`http://localhost:8090/${dataUsers[userId].avatar}`}
+                      alt={dataUsers[userId].name}
+                    />
                     <St.ProductAuthorContent>
-                      <Link to='/seller-profile'>
-                        <St.ProductAuthorName>Кирилл</St.ProductAuthorName>
+                      <Link to={`/seller-profile/${dataUsers[userId].id}`}>
+                        <St.ProductAuthorName>
+                          {dataUsers[userId].name
+                            ? dataUsers[userId].name
+                            : 'Продавец решил остаться безымянным'}
+                        </St.ProductAuthorName>
                       </Link>
                       <St.ProductAuthorAbout>
-                        Продает товары с августа 2021
+                        Продает товары с{' '}
+                        {formatDate(dataUsers[userId].sells_from)}
                       </St.ProductAuthorAbout>
                     </St.ProductAuthorContent>
                   </St.ProductAuthor>
@@ -81,19 +244,23 @@ export const Product = () => {
             </St.ProductDescriptionTitle>
             <St.ProductDescriptionContent>
               <St.ProductDescriptionText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {data.description
+                  ? data.description
+                  : 'Продавец не описал товар'}
               </St.ProductDescriptionText>
             </St.ProductDescriptionContent>
           </St.ProductDescription>
-        </main>
+          {/* {isModalOpen && <EditorAdv closeModal={handleCloseModal} />}
+        {isReviewModalOpen && <Review closeModal={handleCloseModal} />} */}
+          {openReviews ? <Review closeModal={handleCloseAllModals} /> : null}
+          {/* {newProductModal ? 
+           <NewProduct setNewProductModal={setNewProductModal} /> : null} */}
+          {showAdvEdit ? (
+            <EditorAdv data={data} closeModal={handleCloseAllModals} />
+          ) : null}
+        </S.Main>
         <Footer />
       </S.Container>
     </S.Wrapper>
-  );
+  ) : null;
 };
