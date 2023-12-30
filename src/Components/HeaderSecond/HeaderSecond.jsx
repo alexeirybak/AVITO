@@ -1,19 +1,53 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from './HeaderSecond.styled';
+import { useState, useEffect } from 'react';
+import { deleteUserLocal } from '../../helpers/user';
 
 export const HeaderSecond = () => {
+
+  const navigate = useNavigate();
+
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const logOut = () => {
+    deleteUserLocal();
+    if (window.location.pathname === '/') {
+      window.location.reload();
+    }
+    navigate('/');
+  }
+
+
+
   return (
     <S.Header>
       <S.HeaderNav>
         <S.HeaderLogo>
-          <S.LogoMobLink target='_blank'>
-            <S.LogoMobImg src='img/logo-mob.png' alt='logo' />
+          <Link to='/'>
+          <S.LogoMobLink>
+            <S.LogoMobImg src='/img/logo-mob.png' alt='logo' />
           </S.LogoMobLink>
+          </Link>
         </S.HeaderLogo>
-        <Link to='/new-product'>
-          <S.HeaderBtnPutAd>Разместить объявление</S.HeaderBtnPutAd>
-        </Link>
-        <S.HeaderButtonSecond>Личный кабинет</S.HeaderButtonSecond>
+        <S.HeaderBtnPutAd onClick={() => {navigate('/new-product')}}>
+            Разместить объявление
+        </S.HeaderBtnPutAd>
+        <S.HeaderButtonSecond onClick={() => {navigate('/profile')}}>Личный кабинет</S.HeaderButtonSecond>
+        <S.HeaderLogoutIcon src='/img/exit.png' onClick={logOut} />
+        <S.HeaderLogoutIconMobile src='/img/exit-mobile.png' onClick={logOut} />
       </S.HeaderNav>
     </S.Header>
   );
