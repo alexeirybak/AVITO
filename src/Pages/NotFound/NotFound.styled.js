@@ -19,70 +19,69 @@ export const NotFoundContainer = styled.div`
 `;
 
 export const NotFoundBox = styled.div`
-    width: 100%;
-    max-width: 1000px;
-    margin-top: 400px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto auto;
+  @media screen and (max-width: 590px) {
+    max-width: 500px;
     margin-left: 40px;
     margin-right: 40px;
-
-    @media screen and (max-width: 590px) {
-        max-width: 500px;
-        margin-left: 40px;
-        margin-right: 40px;
-        margin-top: 150px;
-    }
-    
-`
+    margin-top: 150px;
+  }
+`;
 
 export const NotFoundTitle = styled.h1`
-    color: #000;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 600;
-    // line-height: 220%;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 40px;
+  color: #000;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  // line-height: 220%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
 
-
-    @media screen and (max-width: 590px) {
-        font-size: 24px;
-        line-height: 120%;
-    }
-`
+  @media screen and (max-width: 590px) {
+    font-size: 24px;
+    line-height: 120%;
+  }
+`;
 
 export const NotFoundLogoIcon = styled.img`
-    width: 54px;
-    height: 54px;
-`
+  width: 54px;
+  height: 54px;
+`;
 
 export const NotFoundDescription = styled.p`
-    color: #000;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px;
-    margin-bottom: 32px;
-    margin-top: 12px;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  margin-bottom: 32px;
+  margin-top: 12px;
+  background-color: #f8d7da;
+  color: #84202a;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #84202a;
 
-    @media screen and (max-width: 590px) {
-        font-size: 22px;
-        line-height: 28px;
-    }
-`
+  @media screen and (max-width: 590px) {
+    font-size: 22px;
+    line-height: 28px;
+  }
+`;
 
 export const NotFoundReturnButton = styled.button`
-    width: 241px;
-    height: 50px;
-    background-color: #009ee4;
-    border: 1px solid #009ee4;
-    border-radius: 6px;
-    font-size: 16px;
-    line-height: 24px;
-    color: #ffffff;
+  width: 241px;
+  height: 50px;
+  background-color: #009ee4;
+  border: 1px solid #009ee4;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
 
-    &:hover {
+  &:hover {
     background-color: #0080c1;
-    }
-`
+  }
+`;

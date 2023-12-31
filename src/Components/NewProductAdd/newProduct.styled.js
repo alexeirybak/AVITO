@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   min-height: 100%;
   overflow: hidden;
 `;
+
 export const ContainerBg = styled.div`
   position: fixed;
   left: 0px;
@@ -16,7 +17,6 @@ export const ContainerBg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
   @media screen and (max-width: 600px) {
     background-color: transparent;
   }
@@ -26,7 +26,6 @@ export const ModalBlock = styled.div`
   z-index: 5;
   left: calc(50% - (600px / 2));
   opacity: 1;
-
   @media screen and (max-width: 600px) {
     position: absolute;
     z-index: 5;
@@ -41,12 +40,10 @@ export const ModalContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 600px;
-  height: auto;
-  padding: 32px 50px 42px;
+  padding: 60px 50px 42px;
   background-color: #ffffff;
   border-radius: 12px;
   position: relative;
-
   @media screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
@@ -60,18 +57,15 @@ export const ModalContent = styled.div`
   }
 `;
 
-
 export const ModalTitle = styled.h3`
   font-size: 32px;
   line-height: 46px;
   font-weight: 500;
   color: #000000;
-
   &:hover::before {
     border-top: 2px solid #0080c1;
     border-left: 2px solid #0080c1;
   }
-
   @media screen and (max-width: 600px) {
     display: flex;
     gap: 26px;
@@ -89,26 +83,23 @@ export const ModalBtnCloseSvg = styled.img`
 `;
 
 export const ModalBtnReturnMobile = styled.div`
-display: none;
-
+  display: none;
   @media screen and (max-width: 600px) {
     display: flex;
     align-items: center;
     cursor: pointer;
   }
-`
+`;
 
 export const ModalBtnReturnImgMobile = styled.img`
-
   @media screen and (max-width: 600px) {
-  width: 9px;
-  height: 18px;
+    width: 9px;
+    height: 18px;
   }
-
-`
+`;
 
 export const ModalBtnClose = styled.button`
-  width: 23px;
+  width: 147px
   height: 23px;
   position: absolute;
   top: 47px;
@@ -302,6 +293,31 @@ export const FormNewArtArea = styled.textarea`
     line-height: 24px;
     color: #0000004d;
   }
+
+  &::-webkit-input-placeholder {
+    color: #c4c4c4;
+  }
+  &:-ms-input-placeholder {
+    color: #c4c4c4;
+  }
+  &::-ms-input-placeholder {
+    color: #c4c4c4;
+  }
+  &::placeholder {
+    color: #c4c4c4;
+  }
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #009ee4;
+    border-radius: 8px;
+    border: 4px solid #fff;
+  }
   @media screen and (max-width: 600px) {
     padding: 9px 17px;
     background: #ffffff;
@@ -315,22 +331,18 @@ export const FormNewArtArea = styled.textarea`
     &::-webkit-input-placeholder {
       font-size: 14px;
       line-height: 21px;
-      color: #c4c4c4;
     }
     &:-ms-input-placeholder {
       font-size: 14px;
       line-height: 21px;
-      color: #c4c4c4;
     }
     &::-ms-input-placeholder {
       font-size: 14px;
       line-height: 21px;
-      color: #c4c4c4;
     }
     &::placeholder {
       font-size: 14px;
       line-height: 21px;
-      color: #c4c4c4;
     }
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -426,7 +438,6 @@ export const Img = styled.img`
   }
 `;
 export const FormNewArtImgCover = styled.input`
-
   cursor: pointer;
   position: absolute;
   width: 100%;
@@ -435,7 +446,6 @@ export const FormNewArtImgCover = styled.input`
   left: 0;
   background-color: #f0f0f0;
   z-index: -1;
-
 
   &::before {
     content: '';
@@ -460,7 +470,7 @@ export const FormNewArtImgCover = styled.input`
   }
 
   &::file-selector-button {
-  visibility: hidden;
+    visibility: hidden;
   }
 `;
 
@@ -589,7 +599,7 @@ export const FormNewArtBtnPubBtnHov02 = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  background-color: ${props => (props.$isFormValid ? '#0080c1' : '#d9d9d9')};
+  background-color: ${(props) => (props.$isFormValid ? '#0080c1' : '#d9d9d9')};
   @media screen and (max-width: 600px) {
     margin-top: 10px;
     width: 100%;

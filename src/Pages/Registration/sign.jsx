@@ -12,12 +12,12 @@ export const Sign = () => {
   }, []);
 
   return (
-        <>
-          <Header />
-          {choiceReg ?
-          <SignIn setChoiceReg={setChoiceReg} /> :
-          <SignUp setChoiceReg={setChoiceReg} />}
-          <Footer />
-        </>
-  )
+    <>
+      <Header />
+      {choiceReg ?
+        <SignIn setChoiceReg={setChoiceReg} /> :
+        <SignUp setChoiceReg={setChoiceReg} />}
+      <Footer />
+    </>
+  );
 };

@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import * as S from './signIn.styled';
-import * as SU from './signUp.styled';
 import {
   handleCity,
   handleEmail,
@@ -9,12 +7,14 @@ import {
   handleRepeatPassword,
   saveAndRegisterUser,
   handleSurname,
-  validateFormReg
+  validateFormReg,
 } from '../../helpers/sign';
 import { useNavigate } from 'react-router-dom';
+import * as S from './signIn.styled';
+import * as SU from './signUp.styled';
 
 export const SignUp = ({ setChoiceReg }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -32,7 +32,11 @@ export const SignUp = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
-            <S.ModalBtnClose onClick={() => {navigate('/')}}>
+            <S.ModalBtnClose
+              onClick={() => {
+                navigate('/');
+              }}
+            >
               <S.ModalBtnCloseLine />
             </S.ModalBtnClose>
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
@@ -123,4 +127,3 @@ export const SignUp = ({ setChoiceReg }) => {
     </S.Wrapper>
   );
 };
-

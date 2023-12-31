@@ -113,9 +113,10 @@ export const ProductArticleImage = styled.img`
   background-color: #f0f0f0;
   display: block;
   object-fit: cover;
-
+  padding: 5px;
   @media screen and (max-width: 600px) {
     width: 100%;
+    padding: 5px;
   }
 `;
 
@@ -150,8 +151,8 @@ export const ProductImageBarDiv = styled.img`
   object-fit: cover;
   transition: all 0.7s ease;
   &:hover {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     z-index: 1;
   }
 `;
@@ -161,7 +162,7 @@ export const ProductImageBarMobile = styled.div`
 
   @media screen and (max-width: 1000px) {
     display: block;
-    width: 68px;
+    width: auto;
     height: 8px;
     background-color: #f0f0f0;
     padding: 7px;

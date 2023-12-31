@@ -1,17 +1,17 @@
-import { HeaderSecond } from '../../Components/HeaderSecond/HeaderSecond';
+import { HeaderSecond } from '../../Components/HeaderAdditional/HeaderAdditional';
 import { ReturnToMain } from '../../Components/ReturnToMain.js/ReturnToMain';
 import { Card } from '../../Components/Card/Card';
 import { Footer } from '../../Components/Footer/Footer';
-import * as S from './SellerProfile.styled';
-import * as St from '../../Components/NewProductAdd/newProduct.styled'
 import { Header } from '../../Components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAccessTokenLocal } from '../../helpers/token';
-import { useGetAllAdsQuery } from '../../Store/RTKQuery/getAds';
+import { useGetAllAdsQuery } from '../../Store/services/getAds';
 import { formatDate } from '../../helpers/time';
 import { useEffect, useState } from 'react';
-import { useGetAllUsersQuery } from '../../Store/RTKQuery/getUsers';
+import { useGetAllUsersQuery } from '../../Store/services/getUsers';
 import { CardLoader } from '../../Components/Loader/CardLoader';
+import * as S from './SellerProfile.styled';
+import * as St from '../../Components/NewProductAdd/newProduct.styled';
 
 export const SellerProfile = () => {
   const userLoggedIn = getAccessTokenLocal();
@@ -21,8 +21,14 @@ export const SellerProfile = () => {
   const [seller, setSeller] = useState();
   const [sellerAds, setSellerAds] = useState();
   const { data = [], isSuccess, isLoading: adsLoading } = useGetAllAdsQuery();
-  const { data: allUsers = [], isSuccess: getUsersSuccess, isLoading, isError, refetch } = useGetAllUsersQuery();
-  if(isError) {
+  const {
+    data: allUsers = [],
+    isSuccess: getUsersSuccess,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetAllUsersQuery();
+  if (isError) {
     refetch();
   }
   useEffect(() => {
@@ -37,7 +43,6 @@ export const SellerProfile = () => {
     if (getUsersSuccess) {
       setSeller(allUsers?.filter((user) => user.id === Number(params.id))[0]);
     }
-    
   }, [allUsers]);
 
   return (
@@ -54,10 +59,11 @@ export const SellerProfile = () => {
             <S.MainCenterBlock>
               <ReturnToMain />
               <S.MainH2>
-                <St.ModalBtnReturnMobile onClick={() => navigate(-1)} >
-                  <St.ModalBtnReturnImgMobile src="/img/return.png" />
+                <St.ModalBtnReturnMobile onClick={() => navigate(-1)}>
+                  <St.ModalBtnReturnImgMobile src='/img/return.png' />
                 </St.ModalBtnReturnMobile>
-                Профиль продавца</S.MainH2>
+                Профиль продавца
+              </S.MainH2>
               <S.MainProfileSell>
                 <S.ProfileSellContent>
                   <S.ProfileSellSeller>
@@ -66,7 +72,7 @@ export const SellerProfile = () => {
                         <S.SellerLinkImg target='_self'>
                           <S.SellerImgImg
                             src={
-                              (isLoading || seller?.avatar === null)
+                              isLoading || seller?.avatar === null
                                 ? '/img/empty-profile.png'
                                 : `http://localhost:8090/${seller?.avatar}`
                             }
@@ -76,22 +82,30 @@ export const SellerProfile = () => {
                       </S.SellerImg>
                     </S.SellerLeft>
                     <S.SellerRight>
-                      {isLoading ? <S.SellerTitleLoading /> : 
-                      <S.SellerTitle>
-                        {seller?.name ? seller?.name : 'Хз как зовут продавца'}
-                      </S.SellerTitle>}
+                      {isLoading ? (
+                        <S.SellerTitleLoading />
+                      ) : (
+                        <S.SellerTitle>
+                          {seller?.name
+                            ? seller?.name
+                            : 'Хз как зовут продавца'}
+                        </S.SellerTitle>
+                      )}
                       <S.SellerCity>{seller?.city}</S.SellerCity>
-                      {isLoading ? <S.SellerInfLoading /> :
-                      <S.SellerInf>
-                        {`Продает товары с ${formatDate(seller?.sells_from)}`}
-                      </S.SellerInf> }
+                      {isLoading ? (
+                        <S.SellerInfLoading />
+                      ) : (
+                        <S.SellerInf>
+                          {`Продает товары с ${formatDate(seller?.sells_from)}`}
+                        </S.SellerInf>
+                      )}
 
                       <S.SellerImgMobBlock>
                         <S.SellerImgMob>
                           <S.SellerImgMobLink target='_self'>
                             <S.SellerImgMobImg
                               src={
-                                (isLoading || seller?.avatar === null)
+                                isLoading || seller?.avatar === null
                                   ? '/img/empty-profile.png'
                                   : `http://localhost:8090/${seller?.avatar}`
                               }
@@ -120,14 +134,17 @@ export const SellerProfile = () => {
               </S.MainProfileSell>
               <S.MainTitle>Товары продавца</S.MainTitle>
             </S.MainCenterBlock>
-            {adsLoading ? <CardLoader /> :
-            <S.MainContent>
-              <S.ContentCards>
-                {sellerAds?.map((product) => (
-                  <Card key={product.id} product={product} />
-                ))}
-              </S.ContentCards>
-            </S.MainContent>}
+            {adsLoading ? (
+              <CardLoader />
+            ) : (
+              <S.MainContent>
+                <S.ContentCards>
+                  {sellerAds?.map((product) => (
+                    <Card key={product.id} product={product} />
+                  ))}
+                </S.ContentCards>
+              </S.MainContent>
+            )}
           </S.MainContainer>
         </S.Main>
         <Footer />

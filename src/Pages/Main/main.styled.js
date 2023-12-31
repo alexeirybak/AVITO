@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   background-color: #f1f1f1;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const Container = styled.div`
@@ -14,6 +15,30 @@ export const Container = styled.div`
   height: 100%;
   margin: 0 auto;
   background-color: #ffffff;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 7;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 75px;
+    background-image: url('/img/newYear.png');
+    background-repeat: repeat-x;
+    background-size: auto 100%; 
+    background-position: 0 0;
+  }
+
+  @media screen and (max-width: 600px) {
+    margin-top: 55px;
+  }
+
+
 `;
 
 export const Main = styled.main``;

@@ -23,6 +23,7 @@ export const ModalBlock = styled.div`
     width: 100vw;
   }
 `;
+
 export const ModalFormLogin = styled.div`
   width: 366px;
   height: 647px;
@@ -32,7 +33,6 @@ export const ModalFormLogin = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 43px 42px 47px;
-
   @media screen and (max-width: 600px) {
     width: 100vw;
     height: 100%;
@@ -51,7 +51,6 @@ export const ModalBtnSignupEnt = styled.div`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-
   &:hover {
     background-color: #0080c1;
   }
@@ -67,4 +66,3 @@ export const ModalBtnSignupEnt = styled.div`
     margin-bottom: 0;
   }
 `;
-

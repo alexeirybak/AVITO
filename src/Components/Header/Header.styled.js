@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 export const HeaderWrapper = styled.header`
   background-color: #009ee4;
-
-  @media screen and (max-width: 590px) {
-    // display: none;
-  }
 `;
 export const HeaderNav = styled.nav`
   max-width: 1178px;

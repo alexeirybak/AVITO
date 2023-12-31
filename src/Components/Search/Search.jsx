@@ -7,7 +7,7 @@ export const Search = ({ setSearchAdv }) => {
         <S.SearchLogoDesktopIcon src='/img/logo.png' />
       </S.SearchLogoDesktop>
       <S.SearchLogoMobile>
-        <S.SearchLogoMobileIcon src='/img/logo-mob.png' />
+        <S.SearchLogoMobileIcon src='/img/logo_mob.png' />
       </S.SearchLogoMobile>
       <S.SearchForm>
         <S.SearchTextDesktop

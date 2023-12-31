@@ -21,8 +21,6 @@ export const FooterWrapper = styled.footer`
 export const FooterContainer = styled.div`
   @media screen and (max-width: 600px) {
     width: 225px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     align-items: center;
     justify-content: space-between;

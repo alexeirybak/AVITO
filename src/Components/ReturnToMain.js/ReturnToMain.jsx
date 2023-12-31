@@ -5,18 +5,18 @@ export const ReturnToMain = () => {
   return (
     <S.MainReturnToMain>
       <S.ReturnToMainLogoDesktop>
-        <Link to='/'>
-          <S.ReturnToMainLogoDesktopIcon src='/img/logo.png' />
+        <Link to="/">
+          <S.ReturnToMainLogoDesktopIcon src="/img/logo.png" />
         </Link>
       </S.ReturnToMainLogoDesktop>
       <S.ReturnToMainLogoMobile>
-        <Link to='/'>
-          <S.ReturnToMainLogoMobileIcon src='/img/logo-mob.png' />
+        <Link to="/">
+          <S.ReturnToMainLogoMobileIcon src="/img/logo_mob.png" />
         </Link>
       </S.ReturnToMainLogoMobile>
       <S.ReturnToMainForm>
-        <Link to='/'>
-          <S.ReturnToMainButton type='submit'>
+        <Link to="/">
+          <S.ReturnToMainButton type="submit">
             Вернуться на главную
           </S.ReturnToMainButton>
         </Link>

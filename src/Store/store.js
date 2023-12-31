@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ads } from './RTKQuery/getAds';
-import { me } from './RTKQuery/getMe';
-import { userToken } from './RTKQuery/getToken';
-import { advId } from './RTKQuery/getAdvId';
-import { myAds } from './RTKQuery/getMyAds';
-import { comments } from './RTKQuery/getComments';
-import { users } from './RTKQuery/getUsers';
+import { ads } from './services/getAds';
+import { me } from './services/getMe';
+import { userToken } from './services/getToken';
+import { advId } from './services/getAdvId';
+import { myAds } from './services/getMyAds';
+import { comments } from './services/getComments';
+import { users } from './services/getUsers';
 
 export const store = configureStore({
   reducer: {

@@ -1,4 +1,4 @@
-import { loginUser, registerUser, singIn } from '../Api/userApi';
+import { loginUser, registerUser } from '../Api/userApi';
 import { saveTokenUserLocal } from './token';
 
 export const handleEmail = (setEmail, setError, event) => {
@@ -17,7 +17,7 @@ export const handlePassword = (setPassword, setErrorPass, event) => {
   setPassword(trimmedValue);
   const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
   if (!passwordValidation.test(trimmedValue)) {
-    setErrorPass('От 6 символов с заглавными, строчными буквами и цифрами');
+    setErrorPass('6 и более символов в разном регистре и с цифрами');
   } else {
     setErrorPass(null);
   }
@@ -33,7 +33,7 @@ export const handleRepeatPassword = (
 ) => {
   setRepeatPassword(event.target.value);
   if (event.target.value !== password) {
-    setErrorPass('Пароли пока не совпадают');
+    setErrorPass('Пароли еще не совпадают');
     setPassEqual(false);
   } else {
     setErrorPass(null);
@@ -56,11 +56,11 @@ export const handleCity = (setCity, event) => {
 export const handleSignIn = async (email, password, setError, navigate) => {
   try {
     const data = await loginUser(email, password);
-    saveTokenUserLocal(data)
-    navigate('/profile')
+    saveTokenUserLocal(data);
+    navigate('/profile');
   } catch (error) {
     console.error(error);
-    setError('Неизвестная ошибка');
+    setError(`${error.message}. Проверяйте вводимые данные`);
   }
 };
 
@@ -75,10 +75,11 @@ export const saveAndRegisterUser = async (
 ) => {
   try {
     await registerUser(email, password, name, surname, city);
-    handleSignIn(email, password, setError, navigate)
+    handleSignIn(email, password, setError, navigate);
   } catch (error) {
     console.error(error);
-    setError('Неизвестная ошибка');
+    console.log(error.message);
+    setError('Ошибка авторизации');
   }
 };
 

@@ -112,8 +112,6 @@ export const SellerImg = styled.div`
 export const SellerLinkImg = styled.a``;
 
 export const SellerImgImg = styled.img`
-  // width: 100%;
-  // height: auto;
   width: 170px;
   height: 170px;
   display: block;

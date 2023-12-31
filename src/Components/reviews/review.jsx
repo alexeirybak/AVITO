@@ -1,47 +1,53 @@
-import { HeaderSecond } from '../HeaderSecond/HeaderSecond';
+import { HeaderSecond } from '../HeaderAdditional/HeaderAdditional';
 import { Footer } from '../Footer/Footer';
+import { getTime } from '../../helpers/time';
+import { useAddCommentMutation } from '../../Store/services/getComments';
+import { useParams } from 'react-router-dom';
+import {
+  getAccessTokenLocal,
+  getRefreshTokenLocal,
+  saveTokenUserLocal,
+} from '../../helpers/token';
+import { useEffect, useState } from 'react';
+import { useGetNewTokenMutation } from '../../Store/services/getToken';
+import { host } from '../../Api/host';
 import * as S from '../NewProductAdd/newProduct.styled';
 import * as SU from './review.styled';
-import { getTime } from '../../helpers/time';
-import { useAddCommentMutation } from '../../Store/RTKQuery/getComments';
-import { useParams } from 'react-router-dom';
-import { getAccessTokenLocal, getRefreshTokenLocal, saveTokenUserLocal } from '../../helpers/token';
-import { useEffect, useState } from 'react';
-import { useGetNewTokenMutation } from '../../Store/RTKQuery/getToken';
-import { host } from '../../Api/host'
-
 
 export const Review = ({ closeModal, dataComments }) => {
   const params = useParams();
   const [comment, setComment] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-  const [addComment, { error, isError, isSuccess: successAdding }] = useAddCommentMutation();
+  const [addComment, { error, isError, isSuccess: successAdding }] =
+    useAddCommentMutation();
   const accessToken = getAccessTokenLocal();
   const refreshToken = getRefreshTokenLocal();
   const [refreshAllTokens, { data, isSuccess }] = useGetNewTokenMutation();
 
-
   const addNewComment = () => {
-    addComment({ idProduct: params.id, commentText: comment, access: accessToken,
+    addComment({
+      idProduct: params.id,
+      commentText: comment,
+      access: accessToken,
     });
   };
 
   useEffect(() => {
     if (isError && error.status === 401) {
-        refreshAllTokens({ access: accessToken, refresh: refreshToken });
+      refreshAllTokens({ access: accessToken, refresh: refreshToken });
     }
-  }, [isError])
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess) {
-        saveTokenUserLocal(data);
-        addNewComment();
+      saveTokenUserLocal(data);
+      addNewComment();
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
     if (successAdding) {
-        setComment('')
+      setComment('');
     }
   }, [successAdding]);
 
@@ -53,8 +59,6 @@ export const Review = ({ closeModal, dataComments }) => {
     }
   }, [comment]);
 
-
-
   return (
     <S.Wrapper>
       <S.ContainerBg>
@@ -63,7 +67,7 @@ export const Review = ({ closeModal, dataComments }) => {
           <S.ModalContent>
             <S.ModalTitle>
               <S.ModalBtnReturnMobile onClick={closeModal}>
-                <S.ModalBtnReturnImgMobile src='/img/return.png' />
+                <S.ModalBtnReturnImgMobile src="/img/return.png" />
               </S.ModalBtnReturnMobile>
               Отзывы о товаре
             </S.ModalTitle>
@@ -71,26 +75,29 @@ export const Review = ({ closeModal, dataComments }) => {
               <S.ModalBtnCloseLine />
             </S.ModalBtnClose>
             <SU.ModalScroll>
-                {(accessToken && (accessToken !== 'undefined')) ? 
-              <S.ModalFormNewArtFormNewArt>
-                <S.FormNewArtBlock>
-                  <S.Label htmlFor='text'>Добавить отзыв</S.Label>
-                  <S.FormNewArtArea
-                    cols='auto'
-                    rows='5'
-                    value={comment}
-                    placeholder='Введите описание'
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </S.FormNewArtBlock>
-                <S.FormNewArtBtnPubBtnHov02
-                  disabled={!isFormValid}
-                  $isFormValid={isFormValid}
-                  onClick={addNewComment}
-                >
-                  Опубликовать
-                </S.FormNewArtBtnPubBtnHov02>
-              </S.ModalFormNewArtFormNewArt> : 'Авторизуйтесь, чтобы добавить комментарий'}
+              {accessToken && accessToken !== 'undefined' ? (
+                <S.ModalFormNewArtFormNewArt>
+                  <S.FormNewArtBlock>
+                    <S.Label htmlFor="text">Добавить отзыв</S.Label>
+                    <S.FormNewArtArea
+                      cols="auto"
+                      rows="5"
+                      value={comment}
+                      placeholder="Введите описание"
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                  </S.FormNewArtBlock>
+                  <S.FormNewArtBtnPubBtnHov02
+                    disabled={!isFormValid}
+                    $isFormValid={isFormValid}
+                    onClick={addNewComment}
+                  >
+                    Опубликовать
+                  </S.FormNewArtBtnPubBtnHov02>
+                </S.ModalFormNewArtFormNewArt>
+              ) : (
+                'Авторизуйтесь, чтобы добавить комментарий'
+              )}
               <SU.ModalReviewsReviews>
                 {dataComments.map((review) => (
                   <SU.Review key={review.id}>
@@ -98,14 +105,20 @@ export const Review = ({ closeModal, dataComments }) => {
                       <SU.ReviewLeft>
                         <SU.ReviewImg>
                           <SU.Img
-                            src={(review.author.avatar === null) ? '/img/empty-profile.png' : `${host}/${review.author.avatar}`}
-                            alt=''
+                            src={
+                              review.author.avatar === null
+                                ? '/img/empty-profile.png'
+                                : `${host}/${review.author.avatar}`
+                            }
+                            alt=""
                           />
                         </SU.ReviewImg>
                       </SU.ReviewLeft>
                       <SU.ReviewRight>
                         <SU.ReviewNameFontT>
-                          {review.author.name ? review.author.name : 'Неизвестный'}{' '}
+                          {review.author.name
+                            ? review.author.name
+                            : 'Неизвестный'}{' '}
                           <SU.Span>{getTime(review.created_on)}</SU.Span>
                         </SU.ReviewNameFontT>
                         <SU.ReviewTitleFontT>Комментарий</SU.ReviewTitleFontT>

@@ -8,7 +8,7 @@ export const NotFound = () => {
         <S.NotFoundBox>
           <S.NotFoundTitle>
             <S.NotFoundLogoIcon src='/img/logo.png' />
-            Ууупс, такой страницы не существует
+            Такой страницы не существует (ошибка 404)
           </S.NotFoundTitle>
           <S.NotFoundDescription>
             Ссылка, по&nbsp;которой вы&nbsp;перешли, никуда не&nbsp;ведет.
@@ -17,7 +17,7 @@ export const NotFound = () => {
           </S.NotFoundDescription>
           <Link to='/'>
             <S.NotFoundReturnButton>
-              Перейти на&nbsp;главную
+              Вернуться на&nbsp;главную
             </S.NotFoundReturnButton>
           </Link>
         </S.NotFoundBox>

@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { handleEmail, handlePassword, handleSignIn, validateFormLog } from '../../helpers/sign';
-import * as S from './signIn.styled';
+import {
+  handleEmail,
+  handlePassword,
+  handleSignIn,
+  validateFormLog,
+} from '../../helpers/sign';
 import { useNavigate } from 'react-router-dom';
+import * as S from './signIn.styled';
 
 export const SignIn = ({ setChoiceReg }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <S.Wrapper>
@@ -17,7 +22,11 @@ export const SignIn = ({ setChoiceReg }) => {
             <S.ModalLogo>
               <S.ModalLogoImg src='img/logo_modal.png' alt='' />
             </S.ModalLogo>
-            <S.ModalBtnClose onClick={() => {navigate('/')}}>
+            <S.ModalBtnClose
+              onClick={() => {
+                navigate('/');
+              }}
+            >
               <S.ModalBtnCloseLine />
             </S.ModalBtnClose>
             {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
@@ -29,14 +38,12 @@ export const SignIn = ({ setChoiceReg }) => {
             />
             <S.ModalInputPassword
               value={password}
-              onChange={(event) =>
-                handlePassword(setPassword, setError, event)
-              }
+              onChange={(event) => handlePassword(setPassword, setError, event)}
               type='password'
               placeholder='Пароль'
             />
             <S.ModalBtnEnter>
-            <S.ModalBtnEnterLink
+              <S.ModalBtnEnterLink
                 onClick={() => {
                   if (validateFormLog(email, password, setError))
                     handleSignIn(email, password, setError, navigate);

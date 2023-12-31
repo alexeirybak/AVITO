@@ -150,7 +150,6 @@ export const SettingsRight = styled.div`
   width: 564px;
   display: flex;
   flex-direction: column;
-
   @media screen and (max-width: 600px) {
     width: 100%;
   }
@@ -353,4 +352,8 @@ export const ContentCards = styled.div`
     justify-content: center;
     height: 100%;
   }
+`;
+
+export const ButtonWrapper = styled.div`
+  position: relative;
 `;
