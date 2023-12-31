@@ -46,9 +46,10 @@ export const MainH2 = styled.h2`
     font-size: 24px;
     line-height: 29px;
     color: #000000;
-    padding: 0 0 0 26px;
     margin-bottom: 20px;
     position: relative;
+    display: flex;
+    gap: 30px;
   }
 `;
 
@@ -111,10 +112,17 @@ export const SellerImg = styled.div`
 export const SellerLinkImg = styled.a``;
 
 export const SellerImgImg = styled.img`
-  width: 100%;
-  height: auto;
+  width: 170px;
+  height: 170px;
   display: block;
   object-fit: cover;
+  border-radius: 50%;
+
+  @media screen and (max-width: 580px) {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+  }
 `;
 
 export const SellerRight = styled.div`
@@ -136,6 +144,17 @@ export const SellerTitle = styled.h3`
     margin-bottom: 6px;
   }
 `;
+
+export const SellerTitleLoading = styled.div`
+  width: 100px;
+  height: 20px;
+  background-color: #f0f0f0;
+`
+export const SellerInfLoading = styled.div`
+  width: 170px;
+  height: 20px;
+  background-color: #f0f0f0;
+`
 
 export const SellerCity = styled.p`
   font-size: 16px;
@@ -176,10 +195,11 @@ export const SellerImgMobLink = styled.a``;
 
 export const SellerImgMobImg = styled.img`
   @media screen and (max-width: 580px) {
-    width: 100%;
-    height: auto;
+    width: 132px;
+    height: 132px;
     display: block;
     object-fit: cover;
+    border-radius: 50%;
   }
 `;
 
@@ -240,12 +260,12 @@ export const MainContent = styled.div`
   }
 `;
 
-export const Cards = styled.div`
+export const ContentCards = styled.div`
   max-width: 1158px;
   width: 100%;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(4, 260px);
+  grid-template-columns: repeat(4, 270px);
   grid-auto-rows: 441px;
   grid-gap: 40px 26px;
   justify-content: center;
@@ -262,20 +282,28 @@ export const Cards = styled.div`
     background-color: #0080c1;
     border-radius: 3px;
   }
+
   @media screen and (max-width: 1158px) {
     display: grid;
-    grid-template-columns: repeat(3, 270px);
+    grid-template-columns: repeat(3, 1fr);
   }
+
   @media screen and (max-width: 890px) {
+    width: 600px;
     display: grid;
-    grid-template-columns: repeat(2, 270px);
+    grid-template-columns: repeat(2, 1fr);
   }
-  @media screen and (max-width: 580px) {
+
+
+  @media screen and (max-width: 600px) {
+    max-width: 550px;
+    padding-left: 16px;
+    padding-right: 16px;
     display: grid;
-    grid-template-columns: repeat(2, 137px);
-    grid-auto-rows: 293px;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px 10px;
+    grid-auto-rows: auto;
     justify-content: center;
-    height: 596px;
+    height: 100%;
   }
 `;
