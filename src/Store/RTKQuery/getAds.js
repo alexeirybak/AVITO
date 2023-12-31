@@ -16,5 +16,3 @@ export const ads = createApi({
 })
 
 export const {useGetAllAdsQuery} = ads
-
-// 'content-type': 'multipart/form-data',
