@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const FooterWrapper = styled.footer`
   display: none;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,10 +19,8 @@ export const FooterWrapper = styled.footer`
 `;
 
 export const FooterContainer = styled.div`
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     width: 225px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,16 +28,8 @@ export const FooterContainer = styled.div`
 `;
 
 export const FooterImg = styled.img`
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 600px) {
     width: 42px;
     height: 42px;
   }
 `;
-// была ссылка внутри img
-// .footer__img img {
-//     width: 100%;
-//     height: 100%;
-//     display: block;
-//     -o-object-fit: cover;
-//        object-fit: cover;
-//   }
